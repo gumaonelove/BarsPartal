@@ -1,0 +1,9 @@
+* {
+    font-family: "Avenir Next";
+    border: 0;
+    background: unset;
+}
+.main {
+    overflow-y: scroll;
+    padding-bottom: 100px;
+}

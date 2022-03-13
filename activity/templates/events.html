@@ -1,0 +1,96 @@
+{% extends 'profile.html' %}
+{% load crispy_forms_filters %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}" />
+{% block content %}
+
+    <div class="container main" id="main">
+    <h1 class="mt-5">Создать мероприятие</h1>
+    <button
+                                type="button"
+                                class="btn btn-primary"
+                                data-toggle="modal"
+                                data-target="#exampleModal"
+                        >
+                            Создать публикацию
+                        </button>
+    <h1 class="mt-5">Мои мероприятия</h1>
+    <div class="row">
+        {% for my_event in my_events %}
+            <div class="card mt-3 offset-1" style="width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title">{{ my_event.title }}</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">{{ my_event.created_at }}</h6>
+                  <p class="card-text">{{ my_event.text }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <h1 class="mt-5">Актуальные мероприятия</h1>
+    <div class="row">
+        {% for active_event in active_events %}
+            <div class="card mt-3 offset-1" style="width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title">{{ active_event.title }}</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">{{ active_event.created_at }}</h6>
+                  <p class="card-text">{{ active_event.text }}</p>
+                  <button class="btn btn-primary">Записаться</button>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+    <div class="modal fade"
+            id="exampleModal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Создать мероприятие</h5>
+                    <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                    >
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{% url 'events' %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-dismiss="modal"
+                    >
+                        Закрыть
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+      const main = document.getElementById("main");
+      const set = (el) => {
+        const screenHeight = document.documentElement.clientHeight;
+        const navHeight = document
+          .getElementById("nav")
+          .getBoundingClientRect().height;
+        el.style.height = screenHeight - navHeight + "px";
+      };
+      set(main);
+      window.addEventListener("resize", () => {
+        set(main);
+      });
+    </script>
+{% endblock content %}

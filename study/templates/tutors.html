@@ -1,0 +1,29 @@
+{% extends 'profile.html' %}
+{% block content %}
+    <div class="container main mt-5" id="main">
+        <h1>Поиск репетиторов {% if subject %}: {{ subject }}{% endif %}</h1>
+        <div class="btn-group mt-3" role="group" aria-label="Basic checkbox toggle button group">
+            {% for subject in subjects %}
+                <a class="btn btn-outline-primary"
+                   href="{% url 'tutors' subject=subject.name %}">{{ subject.name }}</a>
+            {% endfor %}
+        </div>
+
+        <div class="row">
+            {% for tutor in tutors %}
+                <div class="card offset-1 mt-3" style="width: 18rem;">
+                {% if tutor.image %}
+                    <img src="{{ tutor.image.url }}" class="card-img-top" alt="">
+                    {% endif %}
+                    <div class="card-body">
+                      <h5 class="card-title">{{ tutor.get_full_name }}</h5>
+                      <p class="card-text">Предмет: {{ subject }}</p>
+                        <p class="card-text">Стаж: {{ tutor.experience_position }} лет</p>
+                      <a href="#" class="btn btn-primary">Написать в мессенджере</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+{% endblock content %}

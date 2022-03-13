@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'fonts/stylesheet.css' %}" type="text/css" charset="utf-8" />
+    <link rel="stylesheet" href="{% static 'css/main_page.css' %}">
+    <title>barsportal</title>
+</head>
+<body>
+    <nav class="main-nav">
+        <img src="{% static 'icons/logo.svg' %}" alt="" class="main-logo">
+        <div class="main-nav-link-block">
+            <a href="#" class="main-nav-link">о портале</a>
+            <a href="{% url 'auth' %}" class="main-nav-link">вход</a>
+        </div>
+    </nav>
+    <header class="header">
+        <div class="header-shadow"></div>
+        <h1 class="header-heading">лучший способ<br>общаться с коллегами</h1>
+    </header>
+    <div class="about">
+        <h2 class="about-heading">barsportal - это мероприятия, поддержка и новые знания</h2>
+        <hr>
+        <div class="about-blocks">
+            <div class="about-block">
+                <h3>общение</h3>
+                <p>мы помогаем выстраивать контакты между учителями, учениками и родителями</p>
+            </div>
+            <div class="about-block">
+                <h3>общение</h3>
+                <p>мы помогаем выстраивать контакты между учителями, учениками и родителями</p>
+            </div>
+            <div class="about-block">
+                <h3>общение</h3>
+                <p>мы помогаем выстраивать контакты между учителями, учениками и родителями</p>
+            </div>
+        </div>
+    </div>
+    <div class="team">
+        <h2>команда</h2>
+        <div class="team-members">
+            {% for developer in developers %}
+                <div class="team-member">
+                    <img src="{{ developer.image.url }}" alt="">
+                    <p class="team-member-name">{{ developer.get_name }}</p>
+                    <p class="team-member-activity">{{ developer.position }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <footer class="footer">
+        <p class="footer-copyright">copyright internationaldudes {{ year }}</p>
+        <p class="footer-contacts">contact us:<br />{{ phone.number }}/{{ email.email }}</p>
+    </footer>
+</body>
+</html>

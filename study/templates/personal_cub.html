@@ -1,0 +1,172 @@
+{% extends 'profile.html' %}
+{% load static %}
+{% load crispy_forms_filters %}
+{% block content %}
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}"/>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-4 info" id="info">
+            <img src="{{ human.images.first }}" alt="" class="avatar"/>
+            <h2 class="text-center mt-5">{{ human.get_full_name }}</h2>
+            <p class="age">Логин: {{ human.user.username }}</p>
+            <p class="age">Дата рождения: {{ human.date_of_birth }}</p>
+            <p class="status">Статус: {{ position }}</p>
+        </div>
+        <div class="col-8 main" id="main">
+
+          <div class="row">
+            <form enctype="multipart/form-data">
+              <div class="form-group">
+                <label for="Surname">Фамилия</label>
+                <input type="text" class="form-control" id="Surname" placeholder="Фамилия">
+              </div>
+              <div class="form-group mt-2">
+                <label for="Name">Имя</label>
+                <input type="text" class="form-control" id="Name" placeholder="Имя">
+              </div>
+              <div class="form-group mt-2">
+                <label for="Lastname">Отчество</label>
+                <input type="text" class="form-control" id="Lastname" placeholder="Отчество">
+              </div>
+              <div class="form-group mt-2">
+                <label for="image">Выберите изображение</label>
+                <input type="file" class="form-control-file" id="image">
+              </div>
+              <div class="form-group mt-2">
+                <label class="my-1 mr-2" for="position">Выберите должность</label>
+                <select class="custom-select my-1 mr-sm-2" id="position" onchange="get_pos()">
+                    <option value="0">Выберите должность</option>
+                  <option value="1">Учитель</option>
+                  <option value="2">Ученик</option>
+                  <option value="3">Родитель</option>
+                </select>
+              </div>
+              <div class="form-group mt-2" id="last_one">
+                <label for="date">Выберите дату рождения</label>
+                <input type="date" class="form-control" id="date">
+              </div>
+                <script>
+                  b = 0
+                  function get_pos(){
+                    if(b == 1){
+                      document.getElementById('div_education').remove()
+                    }else if(b == 2){
+                      document.getElementById('div_education').remove()
+                    }else if(b == 3){
+                      document.getElementById('div_education').remove()
+                    }
+                    a = document.getElementById('position').value;
+                    if(a == '1'){
+                      b=1
+                      teacher = document.createElement('div');
+                      teacher.className = 'form-group';
+                      teacher.id = 'div_education';
+                      teacher.innerHTML = `
+                        <div class="form-group mt-2">
+                            <label for="subject">Предмет</label>
+                            <select class="custom-select my-1 mr-sm-2" id="subject">
+                                <option value="0">Выберите предмет</option>
+                            {% for subject in subjects %}
+                              <option value="{{ subject.name }}">{{subject.name}}</option>
+                              {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="text">Описание</label>
+                            <input type="text" class="form-control" id="text">
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="is_tutor">Is tutor</label>
+                            <select class="custom-select my-1 mr-sm-2" id="is_tutor"">
+                            <option value="1">Да</option>
+                            <option value="0">Нет</option>
+                        </div>
+                      `;
+                      document.getElementById('last_one').after(teacher)
+                    }else if(a == '2'){
+                      b=2
+                      schoolboy = document.createElement('div');
+                      schoolboy.className = 'form-group';
+                      schoolboy.id = 'div_education';
+                      schoolboy.innerHTML =`
+                      <div class="form-group mt-2">
+                            <label for="school_class">Класс</label>
+                            <input type="text" class="form-control" id="school_class">
+                       </div>`
+                      document.getElementById('last_one').after(schoolboy)
+                    }else{
+                      b=3
+                      par = document.createElement('div');
+                      par.className = 'form-group';
+                      par.id = 'div_education';
+                      par.innerHTML =`
+                      <div class="form-group mt-2">
+                            <label for="child_login">Логин ребенка</label>
+                            <input type="text" class="form-control" id="child_login">
+                       </div>`
+                      document.getElementById('last_one').after(par)
+                    }
+                  }
+                </script>
+            </form>
+              <button class="btn btn-primary mt-3" onclick="sendForm()">Сохранить изменения</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <script src="{% static 'js/request.js' %}"></script>
+    <script>
+      const info = document.getElementById("info");
+      const main = document.getElementById("main");
+      const set = (el) => {
+        const screenHeight = document.documentElement.clientHeight;
+        const navHeight = document
+          .getElementById("nav")
+          .getBoundingClientRect().height;
+        el.style.height = screenHeight - navHeight + "px";
+      };
+      set(info);
+      set(main);
+      window.addEventListener("resize", () => {
+        set(info);
+        set(main);
+      });
+
+      function sendForm() {
+          let data = {
+              'surname': document.getElementById('Surname').value,
+              'name': document.getElementById('Name').value,
+              'lastName': document.getElementById('Lastname').value,
+              'image': document.getElementById('image').value,
+              'position': document.getElementById('position').value,
+              'date': document.getElementById('date').value,
+          }
+          if (b==1){
+              //Учитель
+              data['is_tutor'] = document.getElementById('is_tutor').value;
+            data['subject'] = document.getElementById('subject').value;
+            data['text'] = document.getElementById('text').value;
+            sendRequest(data)
+          } else if (b==2) {
+              //Ученик
+              data['school_class'] = document.getElementById('school_class').value;
+              sendRequest(data)
+          } else if (b==3) {
+              // РОдитель
+              data['child_login'] = document.getElementById('child_login').value;
+              sendRequest(data)
+          } else {
+              alert("Выберите роль")
+          }
+      }
+
+      async function sendRequest(data) {
+        const url = "{% url 'personal_cub' %}";
+        const csrftoken = '{{ csrf_token }}';
+        let status = request(url, data, csrftoken);
+
+        setTimeout(() => window.open("{% url 'profile' %}", '_self', false), 500);
+    }
+    </script>
+{% endblock content %}

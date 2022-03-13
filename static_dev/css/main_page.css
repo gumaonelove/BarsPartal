@@ -1,0 +1,189 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Avenir Next";
+    border: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+.main-nav {
+    display: flex;
+    height: 110px;
+    background-color: #fff;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10%;
+    box-sizing: border-box;
+}
+
+.main-logo {
+    width: 230px;
+    height: 60px;
+}
+
+.main-nav-link {
+    font-size: 20px;
+    color: #000;
+    font-weight: 600;
+}
+
+.main-nav-link-block {
+    display: flex;
+    width: 25%;
+    justify-content: space-between;
+}
+
+.header {
+    background-image: url("../icons/header-bg.jpg");
+    background-size: cover;
+    background-position: center center;
+    width: 100%;
+    height: 780px;
+    background-repeat: no-repeat;
+    position: relative;
+    padding: 10% 10%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    box-sizing: border-box;
+}
+
+.header-shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.header-heading {
+    font-weight: 700;
+    font-size: 120px;
+    line-height: 110px;
+    color: #fff;
+    text-align: right;
+    z-index: 2;
+}
+
+.about {
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 85px 10%;
+}
+
+.about-heading {
+    font-weight: 600;
+    font-size: 30px;
+    color: #000000;
+}
+
+.about hr {
+    width: 185px;
+    height: 3px;
+    background-color: #000;
+    margin-top: 45px;
+}
+
+.about-block {
+    background-color: #F8F8F8;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    height: auto;
+    border-radius: 25px;
+}
+
+.about-block h3 {
+    font-weight: 400;
+    font-size: 23px;
+    color: #000000;
+    width: 270px;
+    font-weight: 600;
+}
+
+.about-block p {
+    font-weight: 600;
+    font-size: 15px;
+    color: #000000;
+    width: 270px;
+    margin-top: 35px;
+}
+
+.about-blocks {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 45px;
+}
+
+.team {
+    padding: 85px 10%;
+    background-color: #00171F;
+    display: flex;
+    flex-direction: column;
+}
+
+.team-member {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.team-member img {
+    width: 122px;
+    height: 122px;
+    border-radius: 50%;
+}
+
+.team-member-name {
+    font-weight: 600;
+    font-size: 20px;
+    color: #fff;
+    margin-top: 20px;
+}
+
+.team-member-activity {
+    font-weight: 400;
+    font-size: 17px;
+    color: #fff;
+}
+
+.team-members {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 80px;
+}
+
+.team h2 {
+    font-weight: 600;
+    font-size: 40px;
+    color: #fff;
+}
+
+.footer {
+    height: 144px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10%;
+    box-sizing: border-box;
+}
+
+.footer-copyright {
+    font-weight: 500;
+    font-size: 17px;
+    color: #000;
+}
+
+.footer-contacts {
+    font-weight: 500;
+    font-size: 15px;
+    color: #000;
+}
